@@ -35,6 +35,14 @@ resource "aws_cloudwatch_log_group" "fargate" {
   )
 }
 
+resource "aws_cloudwatch_log_group" "logrouter" {
+  name = lookup(
+    var.fargate,
+    "${terraform.workspace}.logrouter_name",
+    var.fargate["default.logrouter_name"],
+  )
+}
+
 resource "aws_ecs_cluster" "fargate_cluster" {
   name = lookup(
     var.fargate,
