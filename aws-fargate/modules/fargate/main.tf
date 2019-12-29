@@ -35,10 +35,6 @@ resource "aws_cloudwatch_log_group" "logrouter_output" {
   )
 }
 
-resource "aws_cloudwatch_log_group" "logrouter_output_access" {
-  name = "dev-firelens-sample-access"
-}
-
 resource "aws_cloudwatch_log_group" "logrouter" {
   name = lookup(
     var.fargate,
