@@ -7,4 +7,4 @@
 /aws-fargate/providers/terraform.tfvars
 
 /.idea/
-/app/.envrc
+/.envrc

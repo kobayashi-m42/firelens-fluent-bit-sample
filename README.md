@@ -17,13 +17,24 @@ profile = "your-profile-name"
 ```.envrc
 export AWS_PROFILE=your-profile-name
 export AWS_REGION=your-region
-
 ```
+
+- app用
 
 `app/push-ecr.sh` を実行して、ECRへpushを行います。
 
 引数に、アカウントIDとタグを指定してください。
 
 ```bash
-$ ./push-ecr.sh 123456789012 1.0.0
+$ ./app/push-ecr.sh 123456789012 1.0.0
+```
+
+- fluentbit用
+
+`fluentbit/push-ecr-logrouter.sh` を実行して、ECRへpushを行います。
+
+引数に、アカウントIDとタグを指定してください。
+
+```bash
+$ ./fluentbit/push-ecr-logrouter.sh 123456789012 1.0.0
 ```

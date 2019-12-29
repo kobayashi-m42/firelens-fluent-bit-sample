@@ -27,12 +27,16 @@ resource "aws_security_group" "fargate" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "fargate" {
+resource "aws_cloudwatch_log_group" "logrouter_output" {
   name = lookup(
     var.fargate,
     "${terraform.workspace}.name",
     var.fargate["default.name"],
   )
+}
+
+resource "aws_cloudwatch_log_group" "logrouter_output_access" {
+  name = "dev-firelens-sample-access"
 }
 
 resource "aws_cloudwatch_log_group" "logrouter" {
@@ -60,8 +64,9 @@ data "template_file" "fargate_template_file" {
       "${terraform.workspace}.region",
       var.common["default.region"],
     )
-    app_image_url  = var.ecr["app_image_url"]
-    aws_logs_group = aws_cloudwatch_log_group.fargate.name
+    app_image_url        = var.ecr["app_image_url"]
+    logrouter_image_url  = var.ecr["logrouter_image_url"]
+    logrouter_logs_group = aws_cloudwatch_log_group.logrouter.name
   }
 }
 
@@ -85,6 +90,7 @@ resource "aws_ecs_task_definition" "fargate" {
   )
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.task_execution_role.arn
+  task_role_arn            = aws_iam_role.task_role.arn
 
-  depends_on = [aws_cloudwatch_log_group.fargate]
+  depends_on = [aws_cloudwatch_log_group.logrouter]
 }
