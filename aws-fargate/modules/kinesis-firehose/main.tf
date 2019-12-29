@@ -51,7 +51,7 @@ resource "aws_iam_role_policy" "firehose_role_policy" {
 EOF
 }
 
-resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
+resource "aws_kinesis_firehose_delivery_stream" "firehose_delivery_stream" {
   name        = "${var.role}-stream"
   destination = "s3"
 

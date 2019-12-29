@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "task_execution_trust_relationship" {
 }
 
 resource "aws_iam_role" "task_execution_role" {
-  name               = "${terraform.workspace}-task-execution-role"
+  name               = "${var.role}-task-execution-role"
   assume_role_policy = data.aws_iam_policy_document.task_execution_trust_relationship.json
 }
 
@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "task_trust_relationship" {
 }
 
 resource "aws_iam_role" "task_role" {
-  name               = "${terraform.workspace}-task-role"
+  name               = "${var.role}-task-role"
   assume_role_policy = data.aws_iam_policy_document.task_trust_relationship.json
 }
 
@@ -55,8 +55,8 @@ data "aws_iam_policy_document" "firelens_cloudwatch_policy" {
   }
 }
 
-resource "aws_iam_role_policy" "ecs_instance" {
-  name   = "${terraform.workspace}-firelens-cloudwatch-policy"
+resource "aws_iam_role_policy" "task_role_policy" {
+  name   = "${var.role}-task-role-policy"
   role   = aws_iam_role.task_role.id
   policy = data.aws_iam_policy_document.firelens_cloudwatch_policy.json
 }

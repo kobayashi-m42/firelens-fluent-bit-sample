@@ -1,9 +1,9 @@
 resource "aws_ecr_repository" "app" {
-  name = "${terraform.workspace}-firelens-sample"
+  name = "${var.role}-app"
 }
 
 resource "aws_ecr_repository" "logrouter" {
-  name = "${terraform.workspace}-firelens-sample-logrouter"
+  name = "${var.role}-logrouter"
 }
 
 locals {

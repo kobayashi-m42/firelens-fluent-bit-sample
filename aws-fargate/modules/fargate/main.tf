@@ -1,22 +1,11 @@
 resource "aws_security_group" "fargate" {
-  name = lookup(
-    var.fargate,
-    "${terraform.workspace}.name",
-    var.fargate["default.name"],
-  )
-  description = "Security Group to ${lookup(
-    var.fargate,
-    "${terraform.workspace}.name",
-    var.fargate["default.name"],
-  )}"
+  name = "${var.role}-fargate"
+
+  description = "Security Group to ${var.role}-fargate"
   vpc_id = var.vpc["vpc_id"]
 
   tags = {
-    Name = lookup(
-      var.fargate,
-      "${terraform.workspace}.name",
-      var.fargate["default.name"],
-    )
+    Name = "${var.role}-fargate"
   }
 
   egress {
@@ -27,39 +16,23 @@ resource "aws_security_group" "fargate" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "logrouter_output" {
-  name = lookup(
-    var.fargate,
-    "${terraform.workspace}.name",
-    var.fargate["default.name"],
-  )
+resource "aws_cloudwatch_log_group" "logrouter_error" {
+  name = "${var.role}-error"
 }
 
 resource "aws_cloudwatch_log_group" "logrouter" {
-  name = lookup(
-    var.fargate,
-    "${terraform.workspace}.logrouter_name",
-    var.fargate["default.logrouter_name"],
-  )
+  name = "${var.role}-logrouter"
 }
 
 resource "aws_ecs_cluster" "fargate_cluster" {
-  name = lookup(
-    var.fargate,
-    "${terraform.workspace}.name",
-    var.fargate["default.name"],
-  )
+  name = "${var.role}-fargate"
 }
 
 data "template_file" "fargate_template_file" {
   template = file("../modules/fargate/task/fargate.json")
 
   vars = {
-    aws_region = lookup(
-      var.common,
-      "${terraform.workspace}.region",
-      var.common["default.region"],
-    )
+    aws_region = var.common["default.region"]
     app_image_url        = var.ecr["app_image_url"]
     logrouter_image_url  = var.ecr["logrouter_image_url"]
     logrouter_logs_group = aws_cloudwatch_log_group.logrouter.name
@@ -67,11 +40,7 @@ data "template_file" "fargate_template_file" {
 }
 
 resource "aws_ecs_task_definition" "fargate" {
-  family = lookup(
-    var.fargate,
-    "${terraform.workspace}.name",
-    var.fargate["default.name"],
-  )
+  family = "${var.role}-fargate"
   network_mode          = "awsvpc"
   container_definitions = data.template_file.fargate_template_file.rendered
   cpu = lookup(

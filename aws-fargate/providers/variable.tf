@@ -8,5 +8,5 @@ variable "common" {
 }
 
 locals {
-  role = "firelens-fluentbit"
+  role = "firelens-fluentbit-sample"
 }

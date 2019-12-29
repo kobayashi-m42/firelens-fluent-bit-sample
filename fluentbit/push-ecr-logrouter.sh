@@ -12,7 +12,7 @@ fi
 
 ACCOUNT_ID="$1"
 TAG="$2"
-APP_NAME=dev-firelens-sample-logrouter
+APP_NAME=firelens-fluentbit-sample-logrouter
 
 $(aws ecr get-login --no-include-email --region ap-northeast-1)
 

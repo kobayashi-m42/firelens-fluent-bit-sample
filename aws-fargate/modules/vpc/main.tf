@@ -1,14 +1,10 @@
 resource "aws_vpc" "vpc" {
-  cidr_block           = lookup(var.vpc, "${terraform.workspace}.cidr", var.vpc["default.cidr"])
+  cidr_block           = var.vpc["default.cidr"]
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
 
   tags = {
-    Name = "${terraform.workspace}-${lookup(
-      var.common,
-      "${terraform.workspace}.project",
-      var.common["default.project"],
-    )}-vpc"
+    Name = "${var.common["default.project"]}-vpc"
   }
 }
 
@@ -16,51 +12,39 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "${terraform.workspace}-igw"
+    Name = "${var.common["default.project"]}-igw"
   }
 }
 
 resource "aws_eip" "nat_ip_1a" {
   tags = {
-    Name = "${terraform.workspace}-nat-1a"
+    Name = "${var.common["default.project"]}-nat-1a"
   }
 }
 
 resource "aws_subnet" "public_1a" {
   vpc_id = aws_vpc.vpc.id
-  cidr_block = lookup(
-    var.vpc,
-    "${terraform.workspace}.public_1a",
-    var.vpc["default.public_1a"],
-  )
+  cidr_block = var.vpc["default.public_1a"]
   availability_zone = var.vpc["default.az_1a"]
 
   tags = {
-    Name = "${terraform.workspace}-public-1a"
+    Name = "${var.common["default.project"]}-public-1a"
   }
 }
 
 resource "aws_subnet" "public_1c" {
   vpc_id = aws_vpc.vpc.id
-  cidr_block = lookup(
-    var.vpc,
-    "${terraform.workspace}.public_1c",
-    var.vpc["default.public_1c"],
-  )
+  cidr_block = var.vpc["default.public_1c"]
   availability_zone = var.vpc["default.az_1c"]
 
   tags = {
-    Name = "${terraform.workspace}-public-1c"
+    Name = "${var.common["default.project"]}-public-1c"
   }
 }
 
 resource "aws_subnet" "public_1d" {
   vpc_id = aws_vpc.vpc.id
-  cidr_block = lookup(
-    var.vpc,
-    "${terraform.workspace}.public_1d",
-    var.vpc["default.public_1d"],
-  )
+  cidr_block = var.vpc["default.public_1d"]
   availability_zone = var.vpc["default.az_1d"]
 
   tags = {
@@ -70,43 +54,31 @@ resource "aws_subnet" "public_1d" {
 
 resource "aws_subnet" "private_1a" {
   vpc_id = aws_vpc.vpc.id
-  cidr_block = lookup(
-    var.vpc,
-    "${terraform.workspace}.private_1a",
-    var.vpc["default.private_1a"],
-  )
+  cidr_block = var.vpc["default.private_1a"]
   availability_zone = var.vpc["default.az_1a"]
 
   tags = {
-    Name = "${terraform.workspace}-private-1a"
+    Name = "${var.common["default.project"]}-private-1a"
   }
 }
 
 resource "aws_subnet" "private_1c" {
   vpc_id = aws_vpc.vpc.id
-  cidr_block = lookup(
-    var.vpc,
-    "${terraform.workspace}.private_1c",
-    var.vpc["default.private_1c"],
-  )
+  cidr_block = var.vpc["default.private_1c"]
   availability_zone = var.vpc["default.az_1c"]
 
   tags = {
-    Name = "${terraform.workspace}-private-1c"
+    Name = "${var.common["default.project"]}-private-1c"
   }
 }
 
 resource "aws_subnet" "private_1d" {
   vpc_id = aws_vpc.vpc.id
-  cidr_block = lookup(
-    var.vpc,
-    "${terraform.workspace}.private_1d",
-    var.vpc["default.private_1d"],
-  )
+  cidr_block = var.vpc["default.private_1d"]
   availability_zone = var.vpc["default.az_1d"]
 
   tags = {
-    Name = "${terraform.workspace}-private-1d"
+    Name = "${var.common["default.project"]}-private-1d"
   }
 }
 
@@ -115,7 +87,7 @@ resource "aws_nat_gateway" "nat_1a" {
   subnet_id     = aws_subnet.public_1a.id
 
   tags = {
-    Name = "${terraform.workspace}-1a"
+    Name = "${var.common["default.project"]}-nat-1a"
   }
 }
 
@@ -128,7 +100,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "${terraform.workspace}-public-rt"
+    Name = "${var.common["default.project"]}-public-rt"
   }
 }
 
@@ -141,7 +113,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name = "${terraform.workspace}-private-rt"
+    Name = "${var.common["default.project"]}-private-rt"
   }
 }
 
@@ -275,7 +247,7 @@ resource "aws_network_acl" "public" {
   ]
 
   tags = {
-    Name = "${terraform.workspace}-public"
+    Name = "${var.common["default.project"]}--public"
   }
 }
 
@@ -379,6 +351,6 @@ resource "aws_network_acl" "private" {
   ]
 
   tags = {
-    Name = "${terraform.workspace}-private"
+    Name = "${var.common["default.project"]}-private"
   }
 }
