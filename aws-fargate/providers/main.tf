@@ -13,3 +13,9 @@ module "fargate" {
   vpc    = module.vpc.vpc
   ecr    = module.ecr.ecr
 }
+
+module "kinesis" {
+  source = "../modules/kinesis-firehose"
+
+  role = local.role
+}

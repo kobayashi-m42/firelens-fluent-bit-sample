@@ -6,3 +6,7 @@ variable "common" {
     "default.project" = "firelens-sample"
   }
 }
+
+locals {
+  role = "firelens-fluentbit"
+}
