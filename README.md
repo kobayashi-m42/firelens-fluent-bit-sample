@@ -39,10 +39,10 @@ export AWS_REGION=your-region
 
 `/app`に移動します。
 
-引数に、アカウントIDとタグを指定してください。
+引数に、アカウントIDとECRのリポジトリ名を指定してください。
 
 ```bash
-$ ./app/push-ecr.sh 123456789012 1.0.0
+$ ./app/push-ecr.sh 123456789012 firelens-fluentbit-sample-app
 ```
 
 - fluentbit用
@@ -51,8 +51,8 @@ $ ./app/push-ecr.sh 123456789012 1.0.0
 
 `/fluentbit`に移動します。
 
-引数に、アカウントIDとタグを指定してください。
+引数に、アカウントIDとECRのリポジトリ名を指定してください。
 
 ```bash
-$ ./push-ecr-logrouter.sh 123456789012 1.0.0
+$ ./push-ecr-logrouter.sh 123456789012 firelens-fluentbit-sample-logrouter
 ```
