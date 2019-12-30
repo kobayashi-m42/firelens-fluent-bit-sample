@@ -2,7 +2,7 @@
 
 AWS Fargate上のFirelensを利用して、ログをCloudWatchLogsとKinesisFirehoseに送信するサンプルです。
 
-Fluent Bitによって、ログの種別によって送信先を分けています。
+Fluent Bitを利用しログの種別によって送信先を分けています。
 
 ## サンプルの実行方法
 
