@@ -1,0 +1,32 @@
+[
+  {
+    "name": "app",
+    "image": "${app_image_url}",
+    "essential": true,
+    "logConfiguration": {
+      "logDriver": "awsfirelens"
+    },
+    "memoryReservation": 100
+  },
+  {
+    "name": "logrouter",
+    "image": "${logrouter_image_url}",
+    "essential": true,
+    "firelensConfiguration": {
+      "type": "fluentbit",
+      "options": {
+        "config-file-type": "file",
+        "config-file-value": "/fluent-bit.conf"
+      }
+    },
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${logrouter_logs_group}",
+        "awslogs-region": "${aws_region}",
+        "awslogs-stream-prefix": "firelens-container"
+      }
+    },
+    "memoryReservation": 100
+  }
+]
