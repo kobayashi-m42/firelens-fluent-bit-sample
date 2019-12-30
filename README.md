@@ -1,8 +1,22 @@
 # firelens-fluent-bit-sample
 
+AWS Fargate上のFirelensを利用して、ログをCloudWatchLogsとKinesisFirehoseに送信するサンプルです。
+
+Fluent Bitによって、ログの種別によって送信先を分けています。
+
+## サンプルの実行方法
+
+1.Terraformを利用してAWSに必要なリソースを構築します。
+
+2.Application(今回はログを10秒間出力するだけ)とLogrouterのイメージをECRにpushします。
+
+3.ECSのコンソールから、タスクを手動で実行します。
+
+4.ログがCloudWatchLogsとKinesisFirehoseに出力されていることを確認します。
+
 ## Terraform
 
-Terraformを利用してAWSにVPC,ECR,ECS(Fargate)を構築します。
+Terraformを利用して必要なリソースを構築します。
 
 `aws-fargate/providers/terraform.tfvars` を追加し、プロファイルを設定してください。
 
