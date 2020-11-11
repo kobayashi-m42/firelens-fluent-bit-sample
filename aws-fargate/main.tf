@@ -1,17 +1,17 @@
 module "vpc" {
-  source = "../modules/vpc"
+  source = "./modules/vpc"
 
   common = var.common
 }
 
 module "ecr" {
-  source = "../modules/ecr"
+  source = "./modules/ecr"
 
   role = local.role
 }
 
 module "fargate" {
-  source = "../modules/fargate"
+  source = "./modules/fargate"
 
   role   = local.role
   common = var.common
@@ -20,7 +20,7 @@ module "fargate" {
 }
 
 module "kinesis" {
-  source = "../modules/kinesis-firehose"
+  source = "./modules/kinesis-firehose"
 
   role = local.role
 }

@@ -29,7 +29,7 @@ resource "aws_ecs_cluster" "fargate_cluster" {
 }
 
 data "template_file" "fargate_template_file" {
-  template = file("../modules/fargate/task/fargate.json")
+  template = file("${path.module}/task/fargate.json")
 
   vars = {
     aws_region = var.common["default.region"]
