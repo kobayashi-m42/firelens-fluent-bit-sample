@@ -49,6 +49,7 @@ data "aws_iam_policy_document" "firelens_cloudwatch_policy" {
       "logs:DescribeLogStreams",
       "logs:PutLogEvents",
       "firehose:PutRecordBatch",
+      "s3:PutObject",
     ]
 
     resources = ["*"]

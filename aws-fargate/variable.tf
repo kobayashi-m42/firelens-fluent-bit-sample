@@ -10,3 +10,5 @@ variable "common" {
 locals {
   role = "firelens-fluentbit-sample"
 }
+
+variable "profile" {}

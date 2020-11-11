@@ -13,7 +13,9 @@ fi
 ACCOUNT_ID="$1"
 APP_NAME="$2"
 
-$(aws ecr get-login --no-include-email --region ap-northeast-1)
+aws ecr get-login-password | docker login --username AWS --password-stdin ${ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com
 
+cd fluentbit
 docker build -t ${ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/${APP_NAME}:latest -f Dockerfile .
 docker push ${ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/${APP_NAME}:latest
+cd ../
