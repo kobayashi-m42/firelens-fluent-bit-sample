@@ -2,7 +2,7 @@ resource "aws_security_group" "fargate" {
   name = "${var.role}-fargate"
 
   description = "Security Group to ${var.role}-fargate"
-  vpc_id = var.vpc["vpc_id"]
+  vpc_id      = var.vpc["vpc_id"]
 
   tags = {
     Name = "${var.role}-fargate"
@@ -32,7 +32,7 @@ data "template_file" "fargate_template_file" {
   template = file("${path.module}/task/fargate.json")
 
   vars = {
-    aws_region = var.common["default.region"]
+    aws_region           = var.common["default.region"]
     app_image_url        = var.ecr["app_image_url"]
     logrouter_image_url  = var.ecr["logrouter_image_url"]
     logrouter_logs_group = aws_cloudwatch_log_group.logrouter.name
@@ -40,7 +40,7 @@ data "template_file" "fargate_template_file" {
 }
 
 resource "aws_ecs_task_definition" "fargate" {
-  family = "${var.role}-fargate"
+  family                = "${var.role}-fargate"
   network_mode          = "awsvpc"
   container_definitions = data.template_file.fargate_template_file.rendered
   cpu = lookup(
