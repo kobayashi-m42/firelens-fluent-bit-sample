@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bucket" {
-  bucket        = "${var.role}-log"
+  bucket        = var.s3_bucket_name
   force_destroy = true
 }
 
@@ -52,7 +52,7 @@ EOF
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "firehose_delivery_stream" {
-  name        = "${var.role}-stream"
+  name        = var.delivery_stream_name
   destination = "s3"
 
   s3_configuration {

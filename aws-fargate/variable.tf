@@ -8,7 +8,9 @@ variable "common" {
 }
 
 locals {
-  role = "firelens-fluentbit-sample"
+  role                 = "firelens-fluentbit-sample"
+  s3_bucket_name       = "${local.role}-log"
+  delivery_stream_name = "${local.role}-stream"
 }
 
 variable "profile" {}

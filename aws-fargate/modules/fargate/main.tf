@@ -36,6 +36,9 @@ data "template_file" "fargate_template_file" {
     app_image_url        = var.ecr["app_image_url"]
     logrouter_image_url  = var.ecr["logrouter_image_url"]
     logrouter_logs_group = aws_cloudwatch_log_group.logrouter.name
+    s3_bucket_name       = var.s3_bucket_name
+    log_group_name       = "${var.role}-error"
+    delivery_stream      = var.delivery_stream_name
   }
 }
 
