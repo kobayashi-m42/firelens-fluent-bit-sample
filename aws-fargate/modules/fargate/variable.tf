@@ -1,4 +1,6 @@
 variable "role" {}
+variable "s3_bucket_name" {}
+variable "delivery_stream_name" {}
 
 variable "fargate" {
   type = map(string)

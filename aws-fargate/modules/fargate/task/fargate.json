@@ -27,6 +27,20 @@
         "awslogs-stream-prefix": "firelens-container"
       }
     },
-    "memoryReservation": 100
+    "memoryReservation": 100,
+    "environment": [
+      {
+        "name": "S3_BUCKET_NAME",
+        "value": "${s3_bucket_name}"
+      },
+      {
+        "name": "LOG_GROUP_NAME",
+        "value": "${log_group_name}"
+      },
+      {
+        "name": "DELIVERY_STREAM",
+        "value": "${delivery_stream}"
+      }
+    ]
   }
 ]
